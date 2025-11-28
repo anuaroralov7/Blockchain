@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web3 RPS Game</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем Ethers.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Rock Paper Scissors (Web3)</h1>
+        <!-- Кнопка подключения кошелька -->
+        <button id="connectBtn" style="padding: 10px; font-size: 16px; cursor: pointer;">Connect Wallet</button>
+    </header>
+
+    <div class="score-board">
+        <div id="user-label" class="badge">user</div>
+        <div id="computer-label" class="badge">comp</div>
+        <span id="user-score">0</span>:<span id="computer-score">0</span>
+    </div>
+
+    <div class="result">
+        <p>Connect wallet to play!</p>
+    </div>
+
+    <div class="choices">
+        <div class="choice" id="r">
+            <img src="images/rock.jpg" alt="Rock">
+        </div>
+        <div class="choice" id="p">
+            <img src="images/paper.jpg" alt="Paper">
+        </div>
+        <div class="choice" id="s">
+            <img src="images/scissors.jpg" alt="Scissors">
+        </div>
+    </div>
+    
+    <p id="action-msg">Bet is 0.0001 tBNB</p>
+    
+    <!-- Важно: сначала грузим html, потом скрипт -->
+    <script src="app.js"></script>
+</body>
+</html>
