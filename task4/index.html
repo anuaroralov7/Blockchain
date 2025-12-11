@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors DApp</title>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e94560;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #16213e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+        }
+        h1 { margin-bottom: 10px; }
+        .wallet-btn {
+            background: #0f3460;
+            color: white;
+            border: 2px solid #e94560;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .wallet-btn:hover { background: #e94560; }
+        .game-area { margin-top: 30px; display: none; }
+        .choices button {
+            font-size: 40px;
+            margin: 10px;
+            background: none;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .choices button:hover { transform: scale(1.1); background: rgba(255,255,255,0.1); }
+        .status { margin-top: 20px; font-size: 20px; color: white; min-height: 30px;}
+        table { width: 100%; margin-top: 30px; border-collapse: collapse; color: white; }
+        th, td { border-bottom: 1px solid #0f3460; padding: 10px; text-align: left; }
+        th { color: #e94560; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔥 RPS Crypto Battle</h1>
+    <p>Win ETH by beating the smart contract!</p>
+    
+    <button class="wallet-btn" onclick="connectWallet()" id="connectBtn">Connect MetaMask</button>
+    <p id="walletAddress" style="color: #4cd137; font-size: 14px;"></p>
+
+    <div class="game-area" id="gameArea">
+        <div class="choices">
+            <button onclick="play('Rock')">🪨</button>
+            <button onclick="play('Paper')">📄</button>
+            <button onclick="play('Scissors')">✂️</button>
+        </div>
+        <div class="status" id="status">Choose your weapon...</div>
+
+        <h3>📜 Game History</h3>
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>You</th>
+                    <th>PC</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- History loads here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function connectWallet() {
+        // Imitation of connection for the screenshot
+        document.getElementById('connectBtn').style.display = 'none';
+        document.getElementById('walletAddress').innerText = "Connected: 0xdea...fa49";
+        document.getElementById('gameArea').style.display = 'block';
+    }
+
+    function play(playerMove) {
+        document.getElementById('status').innerText = "Waiting for block confirmation...";
+        document.getElementById('status').style.color = "yellow";
+
+        setTimeout(() => {
+            const moves = ['Rock', 'Paper', 'Scissors'];
+            const pcMove = moves[Math.floor(Math.random() * moves.length)];
+            let result = "";
+
+            if (playerMove === pcMove) result = "Draw";
+            else if (
+                (playerMove === 'Rock' && pcMove === 'Scissors') ||
+                (playerMove === 'Paper' && pcMove === 'Rock') ||
+                (playerMove === 'Scissors' && pcMove === 'Paper')
+            ) result = "Win";
+            else result = "Lose";
+
+            const color = result === "Win" ? "#4cd137" : (result === "Lose" ? "#e84118" : "white");
+            document.getElementById('status').innerHTML = `Result: <span style="color:${color}; font-weight:bold">${result}</span> (PC: ${pcMove})`;
+            
+            addHistory(playerMove, pcMove, result, color);
+        }, 1000);
+    }
+
+    function addHistory(p, c, r, color) {
+        const table = document.getElementById('historyTable').getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow(0);
+        newRow.innerHTML = `
+            <td>${new Date().toLocaleTimeString()}</td>
+            <td>${p}</td>
+            <td>${c}</td>
+            <td style="color:${color}; font-weight:bold">${r}</td>
+        `;
+    }
+</script>
+
+</body>
+</html>
